@@ -171,12 +171,8 @@ a.secondary {
 .page {
   width: 100vw;
   height: 100vh;
-  background-color: #e3e4e5;
-  display: grid;
-  grid-template-columns: repeat(40, 1fr);
-  grid-template-rows: repeat(40, 1fr);
-
-  & > div:hover {
-    background-color: purple;
-  }
+  background: linear-gradient(#fffff0, #f0f8ff, #fff0f5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
