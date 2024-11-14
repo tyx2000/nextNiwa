@@ -19,7 +19,8 @@ const fetcher = async <T>(
   const id = setTimeout(() => controller.abort(), timeout);
 
   const cookieStore = await cookies();
-  const token = cookieStore.get('temp-token');
+  const token: { name?: string; value?: string } =
+    cookieStore.get('temp_token') || {};
   console.log('==========', token);
 
   let result: T | null = null,
@@ -28,6 +29,9 @@ const fetcher = async <T>(
   try {
     const response = await fetch(url, {
       ...fetchConfig,
+      headers: {
+        authorization: `Bearer ${token.value || ''}`,
+      },
       signal: abortSignal ? controller.signal : undefined,
     });
 

@@ -3,7 +3,7 @@
 import fetcher from '@/request/fetcher';
 import api from '@/request/api';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 export const login = async (formData: FormData) => {
   const uid = formData.get('uid');
@@ -15,9 +15,14 @@ export const login = async (formData: FormData) => {
     cookie.set({
       name: 'temp_token',
       value: uid as string,
-      httpOnly: true,
-      path: '/',
+      // httpOnly: true,
+      // expires: 3600,
     });
-    redirect('/search');
+    revalidatePath('/');
   }
+};
+
+export const chat = async (uid: string) => {
+  const res = await fetcher(api.chat + `?uid=${uid}`, { method: 'GET' });
+  return res;
 };

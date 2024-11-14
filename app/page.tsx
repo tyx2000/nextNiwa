@@ -1,25 +1,27 @@
 import { createServer } from '@/utils/supabase';
 import styles from './page.module.css';
 import { cookies } from 'next/headers';
-import BucketWrapper from '@/components/BucketWrapper';
-import Badge from '@/components/Badge';
-import queryMessage from '@/actions/queryMessage';
 import { login } from '@/actions/user';
 import LoginContent from '@/components/LoginContent';
+import Chat from '@/components/Chat';
 
 export default async function Home() {
-  // const cookieStore = await cookies();
-  // const supabase = await createServer(cookieStore);
-  // const { data = [] } = await supabase.storage.listBuckets();
+  const cookieStore = await cookies();
+  const token = cookieStore.get('temp_token');
 
-  await queryMessage();
+  const isLogin = !!(token && token.value);
 
   return (
     <div className={styles.page} id="gridPage">
-      {/*<BucketWrapper buckets={data} />*/}
-      <form action={login}>
-        <LoginContent />
-      </form>
+      {isLogin && token?.value}
+      {isLogin ? (
+        <Chat token={token.value} />
+      ) : (
+        <form action={login}>
+          <div></div>
+          <LoginContent />
+        </form>
+      )}
     </div>
   );
 }

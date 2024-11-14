@@ -4,11 +4,6 @@ import { Fragment, useState } from 'react';
 
 const Index = () => {
   const [uid, setUid] = useState('');
-  const randomUid = () => {
-    const uid = Math.random().toString(36).slice(2, 20);
-    console.log(uid);
-    setUid(uid);
-  };
 
   return (
     <Fragment>
@@ -18,8 +13,7 @@ const Index = () => {
         value={uid}
         onChange={(e) => setUid(e.target.value)}
       />
-      <button onClick={randomUid}>random</button>
-      <button type="submit">登录</button>
+      <button type="submit">enter</button>
     </Fragment>
   );
 };
