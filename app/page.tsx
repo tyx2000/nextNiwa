@@ -13,7 +13,7 @@ export default async function Home() {
 
   return (
     <div className={styles.page} id="gridPage">
-      {isLogin && token?.value}
+      {isLogin && '我的userId - ' + token?.value}
       {isLogin ? (
         <Chat token={token.value} />
       ) : (

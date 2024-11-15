@@ -173,6 +173,8 @@ a.secondary {
   height: 100vh;
   background: linear-gradient(#fffff0, #f0f8ff, #fff0f5);
   display: flex;
+  flex-direction: column;
+  gap: 20px;
   justify-content: center;
   align-items: center;
 }

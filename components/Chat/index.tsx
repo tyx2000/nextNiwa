@@ -20,7 +20,7 @@ const Index = ({ token }: { token: string }) => {
         console.log(socket.id);
         setSocketId(socket.id);
       });
-      socket.on('message', (msg) => {
+      socket.on('receiveMessage', (msg) => {
         console.log('mmmmmmmmmmmmmm', msg);
       });
       socket.on('disconnect', () => {});
@@ -35,14 +35,17 @@ const Index = ({ token }: { token: string }) => {
 
   const connect = async () => {
     const { data } = await chat(targetId);
-    if (data && data.targetSocketId) {
-      setTargetSocketId(data.targetSocketId);
+    if (data && data?.targetSocketId) {
+      setTargetSocketId(data?.targetSocketId);
     }
   };
 
   const sendMessage = () => {
     console.log('---------', chatContent);
-    socketRef.current.emit('message', { targetSocketId, message: chatContent });
+    socketRef.current.emit('transferCenter', {
+      targetSocketId,
+      message: chatContent,
+    });
   };
 
   return (
@@ -65,8 +68,8 @@ const Index = ({ token }: { token: string }) => {
           value={chatContent}
           onChange={(e) => setChatContent(e.target.value)}
         />
+        <button onClick={sendMessage}>send</button>
       </div>
-      <button onClick={sendMessage}>send</button>
     </Fragment>
   );
 };
